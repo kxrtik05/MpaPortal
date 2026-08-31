@@ -20,10 +20,18 @@ function Login() {
     try {
       setLoading(true);
 
+      // Deployed backend URL
+      const API_URL = import.meta.env.VITE_API_URL;
+
+      if (!API_URL) {
+        alert("Backend API URL is not configured.");
+        return;
+      }
+
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${API_URL}/api/auth/login`,
         {
-          employeeId,
+          employeeId: employeeId.trim(),
           password,
         }
       );
@@ -35,10 +43,17 @@ function Login() {
         );
 
         navigate("/dashboard");
+      } else {
+        alert(res.data.message || "Login Failed");
       }
+
     } catch (err) {
+      console.error("Login Error:", err);
+
       alert(
-        err.response?.data?.message || "Login Failed"
+        err.response?.data?.message ||
+        err.message ||
+        "Login Failed"
       );
     } finally {
       setLoading(false);
@@ -50,13 +65,13 @@ function Login() {
 
       {/* Background Video */}
       <video
-         autoPlay
-         loop
-         muted
-         playsInline
+        autoPlay
+        loop
+        muted
+        playsInline
         className="absolute inset-0 w-full h-full object-cover"
-           src="/videos/ship.mp4"
-        />
+        src="/videos/ship.mp4"
+      />
 
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/60"></div>
@@ -73,6 +88,7 @@ function Login() {
             className="mx-auto mb-5 h-24 w-24 rounded-full bg-white p-2 shadow-lg"
           />
 
+          {/* Heading */}
           <h1 className="text-center text-4xl font-bold text-white">
             MPA Complaint Portal
           </h1>
@@ -81,13 +97,15 @@ function Login() {
             Mormugao Port Authority
           </p>
 
+          {/* Login Form */}
           <form
             onSubmit={handleLogin}
             className="space-y-5"
           >
 
+            {/* Employee ID */}
             <div>
-              <label className="mb-2 block text-white font-medium">
+              <label className="mb-2 block font-medium text-white">
                 Employee ID
               </label>
 
@@ -102,8 +120,9 @@ function Login() {
               />
             </div>
 
+            {/* Password */}
             <div>
-              <label className="mb-2 block text-white font-medium">
+              <label className="mb-2 block font-medium text-white">
                 Password
               </label>
 
@@ -118,16 +137,18 @@ function Login() {
               />
             </div>
 
+            {/* Login Button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-xl bg-cyan-500 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-cyan-600"
+              className="w-full rounded-xl bg-cyan-500 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-cyan-600 disabled:cursor-not-allowed disabled:opacity-70"
             >
               {loading ? "Logging in..." : "Login"}
             </button>
 
           </form>
 
+          {/* Register */}
           <div className="mt-8 text-center">
 
             <p className="text-gray-200">
@@ -141,15 +162,18 @@ function Login() {
               Register Here
             </Link>
 
-            <div className="mt-8 border-t border-white/20 pt-4 text-center">
-            <p className="text-gray-300 text-sm">
+          </div>
+
+          {/* Footer */}
+          <div className="mt-8 border-t border-white/20 pt-4 text-center">
+
+            <p className="text-sm text-gray-300">
               Mormugao Port Authority
             </p>
 
-            <p className="text-cyan-300 text-xs mt-1">
-              Developved by AKM Developers.
+            <p className="mt-1 text-xs text-cyan-300">
+              Developed by AKM Developers.
             </p>
-          </div>
 
           </div>
 
