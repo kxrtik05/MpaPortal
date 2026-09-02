@@ -1,4 +1,4 @@
-const Complaint = require("../models/Complaint");
+const Complaint = require("../models/complaint");
 const ExcelJS = require("exceljs");
 const PDFDocument = require("pdfkit");
 
