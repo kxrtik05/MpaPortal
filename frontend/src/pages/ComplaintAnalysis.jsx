@@ -7,7 +7,7 @@ import {
   Download,
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import api, { getAttachmentUrl } from "../api";
 
 function ComplaintAnalysis() {
   const { id } = useParams();
@@ -22,9 +22,7 @@ function ComplaintAnalysis() {
 
   const fetchComplaint = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/complaints/${id}`
-      );
+      const res = await api.get(`/api/complaints/${id}`);
 
       if (res.data.success) {
         setComplaint(res.data.complaint);
@@ -469,8 +467,7 @@ function ComplaintAnalysis() {
 
         {complaint.attachments.map((file, index) => {
 
-          const fileUrl =
-            `http://localhost:5000${file.filePath}`;
+          const fileUrl = getAttachmentUrl(file.filePath);
 
           const isImage =
             file.mimeType?.startsWith("image/");

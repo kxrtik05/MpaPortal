@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import {
   ArrowLeft,
   ClipboardList,
@@ -23,8 +23,8 @@ function ComplaintList() {
 
       if (!employee) return;
 
-      const res = await axios.get(
-        `http://localhost:5000/api/complaints/employee/${employee.employeeId}`
+      const res = await api.get(
+        `/api/complaints/employee/${employee.employeeId}`
       );
 
       setComplaints(res.data.complaints || []);

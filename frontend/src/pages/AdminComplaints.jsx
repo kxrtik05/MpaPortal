@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { ClipboardList, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import api from "../api";
 
 function AdminComplaints() {
   const [complaints, setComplaints] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/complaints")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setComplaints(data.complaints);
+    api
+      .get("/api/complaints")
+      .then((res) => {
+        if (res.data.success) {
+          setComplaints(res.data.complaints);
         }
       })
       .catch((err) => console.log(err));

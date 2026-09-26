@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 function Register() {
   const navigate = useNavigate();
@@ -27,12 +27,7 @@ function Register() {
     try {
       setLoading(true);
 
-      // Explicit backend base URL fall-back
-      const BASE_URL =
-        import.meta.env.VITE_API_URL ||
-        "https://mpaportalbackend-rhep.onrender.com";
-
-      const res = await axios.post(`${BASE_URL}/api/auth/register`, formData);
+      const res = await api.post("/api/auth/register", formData);
 
       if (res.data.success || res.status === 201 || res.status === 200) {
         alert("Registration Successful!");

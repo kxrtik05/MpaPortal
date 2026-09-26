@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 function Login() {
   const navigate = useNavigate();
@@ -20,16 +20,8 @@ function Login() {
     try {
       setLoading(true);
 
-      // Deployed backend URL
-      const API_URL = import.meta.env.VITE_API_URL || 'https://mpaportalbackend-rhep.onrender.com';
-
-      if (!API_URL) {
-        alert("Backend API URL is not configured.");
-        return;
-      }
-
-      const res = await axios.post(
-        `${API_URL}/api/auth/login`,
+      const res = await api.post(
+        "/api/auth/login",
         {
           employeeId: employeeId.trim(),
           password,

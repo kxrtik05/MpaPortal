@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { FileChartColumn, FileText } from "lucide-react";
 
 function AdminReports() {
@@ -18,8 +18,8 @@ function AdminReports() {
     try {
       setLoading(true);
 
-      const response = await axios.get(
-        `http://localhost:5000/api/reports/monthly/pdf?month=${month}`,
+      const response = await api.get(
+        `/api/reports/monthly/pdf?month=${month}`,
         {
           responseType: "blob",
         }
@@ -51,12 +51,9 @@ function AdminReports() {
     try {
       setLoading(true);
 
-      const response = await axios.get(
-        "http://localhost:5000/api/reports/excel",
-        {
-          responseType: "blob",
-        }
-      );
+      const response = await api.get("/api/reports/excel", {
+        responseType: "blob",
+      });
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
 

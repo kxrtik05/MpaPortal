@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -33,9 +33,7 @@ function AdminDashboard() {
   // =========================
   const fetchComplaints = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:5000/api/complaints"
-      );
+      const res = await api.get("/api/complaints");
 
       setComplaints(res.data.complaints || []);
     } catch (err) {
@@ -48,9 +46,7 @@ function AdminDashboard() {
   // =========================
   const fetchEngineers = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:5000/api/engineers"
-      );
+      const res = await api.get("/api/engineers");
 
       setEngineers(res.data.engineers || []);
     } catch (err) {
@@ -65,12 +61,9 @@ function AdminDashboard() {
     if (!engineer) return;
 
     try {
-      await axios.put(
-        `http://localhost:5000/api/complaints/${id}/assign`,
-        {
-          assignedEngineer: engineer,
-        }
-      );
+      await api.put(`/api/complaints/${id}/assign`, {
+        assignedEngineer: engineer,
+      });
 
       fetchComplaints();
     } catch (err) {

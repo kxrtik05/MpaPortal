@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 function EngineerLogin() {
   const navigate = useNavigate();
@@ -12,8 +12,8 @@ function EngineerLogin() {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/engineers/login",
+      const res = await api.post(
+        "/api/engineers/login",
         {
           engineerId,
           password,

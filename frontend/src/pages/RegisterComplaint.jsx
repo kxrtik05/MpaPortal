@@ -1,4 +1,5 @@
 import { useState } from "react";
+import api from "../api";
 import {
   Upload,
   FileText,
@@ -100,15 +101,8 @@ function RegisterComplaint() {
         data.append("attachments", file);
       });
 
-      const response = await fetch(
-        "http://localhost:5000/api/complaints",
-        {
-          method: "POST",
-          body: data,
-        }
-      );
-
-      const result = await response.json();
+      const response = await api.post("/api/complaints", data);
+      const result = response.data;
 
       if (result.success) {
         alert(

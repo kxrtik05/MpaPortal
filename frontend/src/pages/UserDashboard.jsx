@@ -14,7 +14,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 function UserDashboard() {
   const navigate = useNavigate();
@@ -49,12 +49,8 @@ function UserDashboard() {
     try {
       if (!employee.employeeId) return;
 
-      const API_URL =
-        import.meta.env.VITE_API_URL ||
-        "https://mpaportalbackend-rhep.onrender.com";
-
-      const res = await axios.get(
-        `${API_URL}/api/complaints/employee/${employee.employeeId}`
+      const res = await api.get(
+        `/api/complaints/employee/${employee.employeeId}`
       );
 
       setComplaints(res.data.complaints || []);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import {
   Wrench,
   LogOut,
@@ -40,8 +40,8 @@ function EngineerDashboard() {
 
   const fetchComplaints = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/complaints/engineer/${engineer.name}`
+      const res = await api.get(
+        `/api/complaints/engineer/${engineer.name}`
       );
 
       if (res.data.success) {
@@ -60,8 +60,8 @@ function EngineerDashboard() {
     if (!selectedComplaint) return;
 
     try {
-      await axios.put(
-        `http://localhost:5000/api/complaints/${selectedComplaint._id}/status`,
+      await api.put(
+        `/api/complaints/${selectedComplaint._id}/status`,
         {
           status,
           remark,

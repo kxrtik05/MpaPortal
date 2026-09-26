@@ -29,14 +29,35 @@ connectDB();
 // MIDDLEWARE
 // ===============================
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:5175",
+  "https://mpa-complaint-portal.vercel.app",
+];
+
+if (process.env.CLIENT_URL) {
+  allowedOrigins.push(process.env.CLIENT_URL);
+}
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "http://localhost:5175",
-      "https://mpa-complaint-portal.vercel.app",
-    ],
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      try {
+        const hostname = new URL(origin).hostname;
+        if (
+          allowedOrigins.includes(origin) ||
+          hostname === "localhost" ||
+          hostname.endsWith(".vercel.app")
+        ) {
+          return callback(null, true);
+        }
+      } catch (e) {
+        if (allowedOrigins.includes(origin)) return callback(null, true);
+      }
+      return callback(null, false);
+    },
     credentials: true,
   })
 );
