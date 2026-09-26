@@ -21,7 +21,7 @@ function Login() {
       setLoading(true);
 
       // Deployed backend URL
-      const API_URL = import.meta.env.VITE_API_URL;
+      const API_URL = import.meta.env.VITE_API_URL || 'https://mpaportalbackend-rhep.onrender.com';[cite: 1]
 
       if (!API_URL) {
         alert("Backend API URL is not configured.");
