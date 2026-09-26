@@ -27,22 +27,22 @@ function Register() {
     try {
       setLoading(true);
 
-      const API_URL =
+      // Explicit backend base URL fall-back
+      const BASE_URL =
         import.meta.env.VITE_API_URL ||
         "https://mpaportalbackend-rhep.onrender.com";
 
-      const res = await axios.post(
-        `${API_URL}/api/auth/register`,
-        formData
-      );
+      const res = await axios.post(`${BASE_URL}/api/auth/register`, formData);
 
-      if (res.data.success) {
+      if (res.data.success || res.status === 201 || res.status === 200) {
         alert("Registration Successful!");
         navigate("/");
       }
     } catch (err) {
+      console.error("Registration Error Details:", err.response);
       alert(
-        err.response?.data?.message || "Registration Failed"
+        err.response?.data?.message ||
+          `Registration Failed (${err.response?.status || "Network Error"})`
       );
     } finally {
       setLoading(false);
