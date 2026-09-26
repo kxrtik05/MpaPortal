@@ -51,9 +51,17 @@ const handleProfileChange = (e) => {
     try {
       if (!employee.employeeId) return;
 
+      const API_URL = import.meta.env.VITE_API_URL || "https://mpaportalbackend-rhep.onrender.com";[cite: 1]
+
       const res = await axios.get(
-        `http://localhost:5000/api/complaints/employee/${employee.employeeId}`
+        `${API_URL}/api/complaints/employee/${employee.employeeId}`
       );
+
+      setComplaints(res.data.complaints || []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
       setComplaints(res.data.complaints || []);
     } catch (err) {
