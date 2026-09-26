@@ -27,8 +27,10 @@ function Register() {
     try {
       setLoading(true);
 
+      const API_URL = import.meta.env.VITE_API_URL || "https://mpaportalbackend-rhep.onrender.com";[cite: 1]
+
       const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${API_URL}/api/auth/register`,
         formData
       );
 
@@ -41,7 +43,7 @@ function Register() {
       alert(
         err.response?.data?.message || "Registration Failed"
       );
-    } finally {
+    } font-semiboldfinally {
       setLoading(false);
     }
   };
