@@ -27,7 +27,7 @@ function Register() {
     try {
       setLoading(true);
 
-      const API_URL = import.meta.env.VITE_API_URL || "https://mpaportalbackend-rhep.onrender.com";[cite: 1]
+      const API_URL = import.meta.env.VITE_API_URL || "https://mpaportalbackend-rhep.onrender.com";
 
       const res = await axios.post(
         `${API_URL}/api/auth/register`,
